@@ -1,0 +1,71 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv1
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/grafanafile"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc1
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: grafana
+  labels:
+    app : grafana
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        grafana : grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:4.5.2
+        env:
+          - name: GF_INSTALL_PLUGINS
+            value: "briangann-gauge-panel,grafana-piechart-panel"
+        ports:
+        - name: http
+          containerPort: 3000
+        volumeMounts:
+        - mountPath: /var/lib/grafana
+          name: config-grafana
+      volumes:
+      - name: config-grafana
+        persistentVolumeClaim:
+          claimName: pvc1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 30999
+    port: 3000
+  selector:
+    grafana : grafana
+
+
+

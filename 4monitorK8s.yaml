@@ -1,0 +1,59 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kube-state-metrics
+  labels:
+    app : kube-state-metrics
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app : kube-state-metrics
+    spec:
+      containers:
+      - name: kube-state-metrics
+        image: quay.io/coreos/kube-state-metrics:v1.0.1
+        ports:
+        - name: http-metrics
+          containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        resources:
+          requests:
+            memory: 100Mi
+            cpu: 100m
+          limits:
+            memory: 200Mi
+            cpu: 200m
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: kube-state-metrics
+  labels:
+    app : kube-state-metrics
+spec:
+  selector:
+    app : kube-state-metrics
+  ports:
+  - name: kube-state-metrics
+    port: 8080
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: kube-state-metrics
+  labels:
+    cluster: cluster-bubble
+spec:
+  selector:
+    matchLabels:
+      app: kube-state-metrics
+  endpoints:
+  - port: kube-state-metrics
+    interval: 10s

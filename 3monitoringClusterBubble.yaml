@@ -1,0 +1,47 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: cluster-bubble
+  labels:
+    app: cluster-bubble
+spec:
+  selector:
+    app: cluster-bubble
+  ports:
+  - name: micsrv
+    port: 9911
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: cluster-bubble
+  labels:
+    cluster: cluster-bubble
+spec:
+  selector:
+    matchLabels:
+      app: cluster-bubble
+  endpoints:
+  - port: micsrv
+    interval: 5s
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus
+  labels:
+    cluster: cluster-bubble
+spec:
+  serviceMonitorSelector:
+    matchLabels:
+      cluster: cluster-bubble
+  version: v1.7.1
+  resources:
+    requests:
+      memory: 400Mi
+
+
+
+
+

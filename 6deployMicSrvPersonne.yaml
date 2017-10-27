@@ -1,0 +1,61 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: micsrv-personne
+  labels:
+    app : cluster-bubble
+    nomSrv: personne
+    versionSrv : 1-0-0
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app : cluster-bubble
+        nomSrv: personne
+        versionSrv : 1-0-0
+    spec:
+      containers:
+      - name: bubble
+        image: marcdivet01/bubble:v001
+        workingDir: /app
+        env:
+        - name: MY_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP 
+        ports:
+        - name: http
+          containerPort: 9911
+        volumeMounts:
+        - mountPath: /cfghost
+          name: config-bubble
+        command: ["/app/bubble", "-cfgPath=/cfghost/", "-ipPort=:9911", "-nbProc=2", "-nomPod=$(MY_POD_NAME)", "-nomNode=$(MY_NODE_NAME)", "-nomService=Personne", "-versionService=2.0.1"]
+      volumes:
+      - name: config-bubble
+        hostPath:
+          path: /hosthome/marc/go/src/marc/BubbleV3/partageMinikube/cfgBubble
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: personne
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 31001
+    port: 9911
+  selector:
+    app : cluster-bubble
+    nomSrv: personne
+    versionSrv : 1-0-0
+
+
