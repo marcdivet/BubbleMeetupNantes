@@ -5,6 +5,10 @@
 - la 9 les liens vers de la doc
 
 ## De quoi rejouer la démo du Meetup Go du 26/10/1017
+### Prérequis
+  - minikube installé : https://kubernetes.io/docs/tasks/tools/install-minikube/
+  - et docker !!! 
+
 ### Start de minikube (en fonction de votre machine ...)
 minikube start --cpus 6 --memory 4096
 
