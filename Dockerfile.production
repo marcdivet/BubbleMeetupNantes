@@ -1,0 +1,12 @@
+# start with a scratch (no layers)
+FROM scratch
+
+COPY bubble /app/bubble
+COPY Personne.json /app/cfg/Personne.json
+COPY Contrat.json /app/cfg/Contrat.json
+
+EXPOSE 9911
+#WORKDIR /app
+# run it!
+ENTRYPOINT ["/app/bubble"]
+CMD ["-cfgPath=/app/cfg/", "-ipPort=:9911", "-nbProc=2", "-nomPod=POD01", "-nomNode=worker01", "-nomService=Contrat", "-versionService=1.0.0"]
