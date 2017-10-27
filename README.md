@@ -1,6 +1,7 @@
 # BubbleMeetupNantes
 ## Dans la présentation, trois slides n'ont pas été passé :
-- la 7 présentant le workflow des déploiements
+- la 7 présentant le workflow des déploiements :
+![xxxxx](wf.PNG)
 - la 8 montrant la résistance à la charge de Bubble ... les pics toutes les 1/2 sont causés par la mise à jours des TBB ! la encore la médiane ne bouge pas lorsque les percentile 0,99 et 0,999 présente des variations considérables ! Pour info ma VM a planté à 10 000 goroutines en // ... par saturation de la mémoire, via un kill propre par l'OS ! 
 - la 9 les liens vers de la doc
 
