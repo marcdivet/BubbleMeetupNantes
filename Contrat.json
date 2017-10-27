@@ -1,0 +1,8 @@
+{
+ "minPollGoroutines":1,
+ "maxPoolGoroutines":60,
+ "nbPasParCycle":6,
+ "dureeParPasSec":10,
+ "nbTriDansBubble":3,
+ "dureeWaitDansBubble":50
+}
