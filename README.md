@@ -29,7 +29,7 @@ minikube start --cpus 6 --memory 4096
   - kubectl create -f 4monitorK8s.yaml
   - kubectl create -f 5nodeexport.yaml
 
-Attention : Dans les deux fichiers suivant le répertoire suivant de minikube est
+Attention : Dans les deux fichiers suivant ce répertoire de minikube est
             utilisé : /hosthome/marc/go/src/marc/BubbleV3/partageMinikube/cfgBubble
             Minikube monte votre répetoire home dans /hosthome, c'est donc dans le répertoire si dessus
             qu'il faut copier les fichiers de configuration Personne.json et Contrat.json
