@@ -37,7 +37,7 @@ Attention : Dans les deux fichiers suivant le répertoire suivant de minikube es
   - minikube service prometheus
   - minikube service graphana
 
-### Configuration de graphana
+### Configuration de grafana
 ajout de la data source : nom --> PrometheusLocalHost url --> http://prometheus:9090
 upload des 3 tableaux de bord :
   - Cluster Cockpit-1508946335336.json
