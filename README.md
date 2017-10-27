@@ -2,9 +2,20 @@
 ## Dans la présentation, trois slides n'ont pas été passé :
 - la 7 présentant le workflow des déploiements :
 ![xxxxx](wf.PNG)
-- la 8 montrant la résistance à la charge de Bubble ... les pics toutes les 1/2 sont causés par la mise à jours des TBB ! la encore la médiane ne bouge pas lorsque les percentile 0,99 et 0,999 présente des variations considérables ! Pour info ma VM a planté à 10 000 goroutines en // ... par saturation de la mémoire, via un kill propre par l'OS ! 
-- la 9 les liens vers de la doc
-
+- la 8 montrant la résistance à la charge de Bubble ... les pics toutes les 1/2 sont causés par la mise à jours des TBB ! la encore la médiane ne bouge pas lorsque les percentile 0,99 et 0,999 présente des variations considérables ! Pour info ma VM a planté à 10 000 goroutines en // ... par saturation de la mémoire, via un kill propre par l'OS !
+![xxxxx](tir01.PNG)
+- la 9, les liens vers de la doc :
+https://prometheus.io/docs/introduction/overview/
+https://grafana.com/
+https://coreos.com/blog/the-prometheus-operator.html
+https://coreos.com/operators/prometheus/docs/latest/user-guides/getting-started.html
+https://coreos.com/operators/prometheus/docs/latest/
+https://github.com/prometheus/node_exporter
+https://github.com/kubernetes/kube-state-metrics/
+https://kubernetes.io/docs/getting-started-guides/minikube/
+https://docs.docker.com/engine/installation/
+http://blog.cloud66.com/how-to-create-the-smallest-possible-docker-image-for-your-golang-application/
+https://www.habitus.io
 ## De quoi rejouer la démo du Meetup Go du 26/10/1017
 ### Prérequis
   - minikube installé : https://kubernetes.io/docs/tasks/tools/install-minikube/
