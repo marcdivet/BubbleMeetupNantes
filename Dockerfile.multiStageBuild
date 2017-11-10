@@ -1,0 +1,32 @@
+# start a golang base image, version latest
+FROM golang:latest AS build
+
+#switch to our app directory
+RUN mkdir -p /go/src/app  
+WORKDIR /go/src/app
+
+#copy the source files
+COPY main.go /go/src/app
+
+#disable crosscompiling 
+ENV CGO_ENABLED=0
+
+#compile linux only
+ENV GOOS=linux
+
+#build the binary with debug information removed
+RUN go get app
+RUN go build  -ldflags '-w -s' -a -installsuffix cgo -o bubble 
+
+# start with a scratch (no layers)
+FROM scratch
+
+COPY --from=build /go/src/app/bubble /app/bubble
+COPY Personne.json /app/cfg/Personne.json
+COPY Contrat.json /app/cfg/Contrat.json
+
+EXPOSE 9911
+#WORKDIR /app
+# run it!
+ENTRYPOINT ["/app/bubble"]
+CMD ["-cfgPath=/app/cfg/", "-ipPort=:9911", "-nbProc=2", "-nomPod=POD01", "-nomNode=worker01", "-nomService=Contrat", "-versionService=1.0.0"]
