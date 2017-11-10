@@ -34,6 +34,13 @@ docker login
 docker build -f Dockerfile.production -t marcdivet01/bubble:v001 .
 docker push votrerepo/bubble:v001
 ```
+Service après vente !!!! Depuis les dernière version il est possible de réaliser les étapes du build dans un seul Dockerfile ...
+```
+docker build -f Dockerfile.multiStageBuild -t marcdivet01/bubble:v001 .
+docker login 
+docker push votrerepo/bubble:v001
+```
+Plutot cool !!!
 ### Déploiement dans minikube
 ```
 kubectl create -f 1grafana.yaml
